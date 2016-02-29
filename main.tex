@@ -1,0 +1,73 @@
+\documentclass{article}
+\usepackage[polish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{polski}
+\frenchspacing
+\setcounter{tocdepth}{2}
+
+\begin{document}
+	
+\begin{titlepage}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+\center
+
+%----------------------------------------------------------------------------------------
+
+\textsc{\LARGE Politechnika Warszawska}\\[5mm]
+\textsc{\LARGE Wydział Matematyki i Nauk Informacyjnych}\\[4cm]
+ 
+%----------------------------------------------------------------------------------------
+
+\textsc{\Huge Algorytmy Zaawansowane}\\[0.5cm]
+
+%----------------------------------------------------------------------------------------
+
+\HRule \\[0.4cm]
+{ \LARGE \bfseries Dokumentacja wstępna projektu}\\[2.5cm]
+ 
+%----------------------------------------------------------------------------------------
+
+\begin{flushright}
+\Large \emph{Autorzy:}\\[0.5cm]
+Anna \textsc{Zawadzka}\\
+Piotr \textsc{Waszkiewicz}\\
+\end{flushright}
+\\[4.5cm]
+%----------------------------------------------------------------------------------------
+
+\vfill
+{\large \today}\\[3cm]
+
+\end{titlepage}
+	
+\newpage
+
+\section{Opis problemu}
+
+Celem projektu jest zaprojektowanie i zaimplementowanie algorytmu znajdującego spójność krawędziową grafu przez przepływ.
+
+Daną wejściową problemu jest nieskierowany graf bez wag G=(V,E). Na jego podstawie utworzona będzie sieć przepływowa, czyli graf skierowany G=(V,E), w którym każda krawędź (u,v) należąca do zbioru krawędzi E ma nieujemną przepustowość c(u,v) $>=$ 0, dodatkowo wyróżnione są dwa wierzchołki: źródło s i ujście t. Następnie wyznaczony zostanie przepływ, przy pomocy którego będzie można uzyskać informację o spójności krawędziowej grafu wejściowego.
+
+
+\section{Metoda realizacji zadania}
+
+\begin{enumerate}
+\item Obliczamy najkrótsze ścieżki między wszystkimi parami wierzchołków
+\item Wybieramy najdłuższą z najkrótszych ścieżek, która wyznacza źródło i ujście sieci przepływowej
+\item Skierowanie krawędzi wyznaczamy za pomocą algorytmu BFS
+\item Przepustowości wszystkich krawędzi w sieci przepływowej ustalamy na 1
+\item Wyznaczamy przepływ maksymalny algorytmem Forda-Fulkersona
+\item Określamy spójność krawędziową grafu wejściowego
+\end{enumerate}
+
+
+Wyznaczenie spójności krawędziowej możliwe jest przy wykorzystaniu z twierdzenia:
+W dowolnej sieci wartość maksymalnego przepływu jest równa przepustowości minimalnego przekroju.
+
+\section{Anaiza poprawności i złożoności czasowej algorytmu}
+
+\section{Opis wejścia i wyjścia}
+
+\end{document}
