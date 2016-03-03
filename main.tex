@@ -54,11 +54,10 @@ Daną wejściową problemu jest nieskierowany graf bez wag G=(V,E). Na jego pods
 \section{Metoda realizacji zadania}
 
 \begin{enumerate}
-\item Obliczamy najkrótsze ścieżki między wszystkimi parami wierzchołków
-\item Wybieramy najdłuższą z najkrótszych ścieżek, która wyznacza źródło i ujście sieci przepływowej
-\item Skierowanie krawędzi wyznaczamy za pomocą algorytmu BFS
-\item Przepustowości wszystkich krawędzi w sieci przepływowej ustalamy na 1
-\item Wyznaczamy przepływ maksymalny algorytmem Forda-Fulkersona
+\item Na podstawie grafu wejściowego tworzymy sieć przepływową, przy czym jednej krawędzi nieskierowanej grafu wejściowego odpowiadają dwie krawędzie skierowane w przeciwne strony w sieci przepływowej
+\item Każdej krawędzi w sieci przepływowej nadajemy wagę o wartości 1
+\item Dla każdej pary wierzchołków sieci przepływowej wyznaczamy maksymalny przepływ między nimi
+\item Ze wszystkich wyznaczonych przepływów wybieramy ten o minimalnej wartości
 \item Określamy spójność krawędziową grafu wejściowego
 \end{enumerate}
 
