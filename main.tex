@@ -25,7 +25,12 @@
 %----------------------------------------------------------------------------------------
 
 \HRule \\[0.4cm]
-{ \LARGE \bfseries Dokumentacja wstępna projektu}\\[2.5cm]
+{ \LARGE \bfseries Wyznaczanie spójności krawędziowej grafu przez przepływ}\\[0.2cm]
+ 
+%----------------------------------------------------------------------------------------
+
+\HRule \\[0.4cm]
+{  \bfseries Dokumentacja wstępna projektu}\\[2.5cm]
  
 %----------------------------------------------------------------------------------------
 
@@ -34,7 +39,7 @@
 Anna \textsc{Zawadzka}\\
 Piotr \textsc{Waszkiewicz}\\
 \end{flushright}
-\\[4.5cm]
+\\[3.5cm]
 %----------------------------------------------------------------------------------------
 
 \vfill
@@ -44,29 +49,81 @@ Piotr \textsc{Waszkiewicz}\\
 	
 \newpage
 
-\section{Opis problemu}
+\section{Opis problemu}\\
 
-Celem projektu jest zaprojektowanie i zaimplementowanie algorytmu znajdującego spójność krawędziową grafu przez przepływ.
+Celem projektu jest zaprojektowanie i zaimplementowanie algorytmu znajdującego spójność krawędziową grafu przez przepływ.\\
 
-Daną wejściową problemu jest nieskierowany graf bez wag G=(V,E). Na jego podstawie utworzona będzie sieć przepływowa, czyli graf skierowany G=(V,E), w którym każda krawędź (u,v) należąca do zbioru krawędzi E ma nieujemną przepustowość c(u,v) $>=$ 0, dodatkowo wyróżnione są dwa wierzchołki: źródło s i ujście t. Następnie wyznaczony zostanie przepływ, przy pomocy którego będzie można uzyskać informację o spójności krawędziowej grafu wejściowego.
+Daną wejściową problemu jest nieskierowany graf bez wag $G=(V,E)$. Na jego podstawie utworzona będzie sieć przepływowa, czyli graf skierowany $G'=(V,E')$ z dodatnimi wagami określającymi przepustowości (pojemności) krawędzi i wyróżnionymi dwoma wierzchołkami: źródłem i ujściem. Następnie wyznaczony zostanie przepływ. Jest to fukcja $f$ określona na zbiorze $E'$ krawędzi grafu $G'$ taka, że:
+\begin{itemize}
+    \item dla każdego $e\in E'$ zachodzi $0\le f(e)\le waga(e)$
+    \item dla każdego wierzchołka wewnętrznego (tzn. każdego oprócz źródła i ujścia) sumaryczny przepływ dopływający do tego wierzchołka jest równy sumarycznemu przepływowi wypływającemu z niego
+\end{itemize}
+Na podstawie przepływu możliwe będzie wyznaczenie spójności krawędziowej grafu wejściowego.
 
+%----------------------------------------------------------------------------------------
 
 \section{Metoda realizacji zadania}
 
+Algorytm rozwiązania zadania jest następujący:
 \begin{enumerate}
-\item Na podstawie grafu wejściowego tworzymy sieć przepływową, przy czym jednej krawędzi nieskierowanej grafu wejściowego odpowiadają dwie krawędzie skierowane w przeciwne strony w sieci przepływowej
+\item Na podstawie grafu wejściowego konstruujemy sieć przepływową, przy czym jednej krawędzi nieskierowanej grafu wejściowego odpowiadają dwie krawędzie skierowane w przeciwne strony w sieci przepływowej
 \item Każdej krawędzi w sieci przepływowej nadajemy wagę o wartości 1
-\item Dla każdej pary wierzchołków sieci przepływowej wyznaczamy maksymalny przepływ między nimi
-\item Ze wszystkich wyznaczonych przepływów wybieramy ten o minimalnej wartości
-\item Określamy spójność krawędziową grafu wejściowego
+\item Dla każdej pary wierzchołków sieci przepływowej wyznaczamy maksymalny przepływ między nimi przy użyciu algorytmu Forda-Fulkersona
+\item Ze wszystkich wyznaczonych maksymalnych przepływów wybieramy ten o minimalnej wartości
+\item Określamy spójność krawędziową grafu wejściowego, która jest równa przepływowi wyznaczonemu w poprzednim kroku
 \end{enumerate}
 
+%----------------------------------------------------------------------------------------
 
-Wyznaczenie spójności krawędziowej możliwe jest przy wykorzystaniu z twierdzenia:
-W dowolnej sieci wartość maksymalnego przepływu jest równa przepustowości minimalnego przekroju.
+\section{Analiza poprawności i złożoności czasowej algorytmu}
 
-\section{Anaiza poprawności i złożoności czasowej algorytmu}
+\subsection{Analiza poprawności}
+
+
+Wyznaczenie spójności krawędziowej przy pomocy przepływu możliwe jest przy wykorzystaniu poniższego twierdzenia. \\ \\
+\textbf{Twierdzenie o maksymalnym przepływie i minimalnym przekroju.}\\
+
+\textit{Maksymalna wartość przepływu w sieci równa jest minimalnej przepustowości przekroju tej sieci.}\\\\
+\textbf{Definicja.}\\
+
+\textit{Przekrojem sieci przepływowej $G'=(V,E')$ nazywamy podział zbioru $V$ na zbiory $S$ i $T$ takie, że:
+\begin{itemize}
+    \item $S\cup T=V$ oraz $S\cap T=\emptyset$
+    \item $s\in S$, gdzie $s$ - źródło
+    \item $t\in T$, gdzie $t$ - ujście
+\end{itemize}
+Przepustowością przekroju nazywamy sumę wag wszystkich krawędzi o początku w $S$ i końcu w $T$.
+}\\\\
+
+Ponieważ w skonstruowanej sieci przepływowej wszystkie krawędzie mają przepustowości o wartości 1, maksymalny przepływ jest równy minimalnej liczbie krawędzi, których usunięcie spowoduje rozspójnienie grafu.\\
+
+
+\subsection{Anaiza złożoności czasowej}
+
+
+Złożoności czasowe poszczególnych kroków algorytmu: 
+\begin{enumerate}
+\item Konstrukcja sieci przepływowej: $O(NIE WIEM)$
+\item Ustalenie wag krawędzi sieci przepływowej: $O(|E'|)$
+\item Wyznaczenie maksymalnego przepływu między wszystkimi parami wierzchołków: 
+\begin{itemize}
+    \item przejście po wszystkich parach: $O(\frac{|V|^{2}}{2})$
+    \item obliczenie maksymalnego przepływu: $O(|V|\cdot |E'|\cdot |M|)$, gdzie $M$ - maksymalna pojemność krawędzi w grafie przepływowym
+\end{itemize}
+W tym rozwiązaniu wszystkie pojemności krawędzi grafu przepływowego mają wartość 1, zatem sumaryczna złożoność tego kroku to: $O(\frac{|V|^{2}}{2}\cdot|V|\cdot |E'|) \approx O(|V|^{3}\cdot |E'|)$
+\item Wybór minimalnego przepływu spośród wyznaczonych w poprzednim kroku: $O(\frac{|V|^{2}}{2})$
+\end{enumerate}\\
+Zatem całkowita złożoność czasowa jest rzędu $O(|V|^{3}\cdot |E'|)$, gdzie $|E'|=2\cdot |E|$.\\
+
 
 \section{Opis wejścia i wyjścia}
+Dane wejściówe: w postaci pliku oraz do wyklikania w programie.
+Format pliku: krawędzie w postaci pary a b, gdzie a i b to wierzchołki będące końcami krawędzi, oddzielone znakiem nowej linii blebleble
+
+
+Wynikiem działania programu jest liczba określająca spójność krawędziową grafu wejściówego.
 
 \end{document}
+
+
+
