@@ -51,7 +51,7 @@ Piotr \textsc{Waszkiewicz}\\
 
 \section{Opis problemu}\\
 
-Celem projektu jest zaprojektowanie i zaimplementowanie algorytmu znajdującego spójność krawędziową grafu przez przepływ.\\
+Celem projektu jest zaprojektowanie i zaimplementowanie algorytmu znajdującego spójność krawędziową grafu poprzez wyznaczenie maksymalnego przepływu.\\
 
 Daną wejściową problemu jest nieskierowany graf bez wag $G=(V,E)$. Na jego podstawie utworzona będzie sieć przepływowa, czyli graf skierowany $G'=(V,E')$ z dodatnimi wagami określającymi przepustowości (pojemności) krawędzi i wyróżnionymi dwoma wierzchołkami: źródłem i ujściem. Następnie wyznaczony zostanie przepływ. Jest to fukcja $f$ określona na zbiorze $E'$ krawędzi grafu $G'$ taka, że:
 \begin{itemize}
@@ -66,7 +66,7 @@ Na podstawie przepływu możliwe będzie wyznaczenie spójności krawędziowej g
 
 Algorytm rozwiązania zadania jest następujący:
 \begin{enumerate}
-\item Na podstawie grafu wejściowego konstruujemy sieć przepływową, przy czym jednej krawędzi nieskierowanej grafu wejściowego odpowiadają dwie krawędzie skierowane w przeciwne strony w sieci przepływowej
+\item Na podstawie grafu wejściowego konstruujemy sieć przepływową, przy czym jednej krawędzi nieskierowanej grafu wejściowego odpowiadają dwie krawędzie przeciwnie skierowane w sieci przepływowej
 \item Każdej krawędzi w sieci przepływowej nadajemy wagę o wartości 1
 \item Dla każdej pary wierzchołków sieci przepływowej wyznaczamy maksymalny przepływ między nimi przy użyciu algorytmu Forda-Fulkersona
 \item Ze wszystkich wyznaczonych maksymalnych przepływów wybieramy ten o minimalnej wartości
@@ -103,7 +103,7 @@ Ponieważ w skonstruowanej sieci przepływowej wszystkie krawędzie mają przepu
 
 Złożoności czasowe poszczególnych kroków algorytmu: 
 \begin{enumerate}
-\item Konstrukcja sieci przepływowej: $O(NIE WIEM)$
+\item Konstrukcja sieci przepływowej: $O(V+E)$
 \item Ustalenie wag krawędzi sieci przepływowej: $O(|E'|)$
 \item Wyznaczenie maksymalnego przepływu między wszystkimi parami wierzchołków: 
 \begin{itemize}
@@ -133,7 +133,7 @@ Przykładowy plik wejściowy:\\
 }
 
 
-Wynikiem działania programu jest liczba określająca spójność krawędziową grafu wejściówego. Będzie ona widoczna bezpośrednnio w programie.
+Wynikiem działania programu jest liczba określająca spójność krawędziową grafu wejściówego. Będzie ona widoczna bezpośrednio w programie.
 
 \end{document}
 
