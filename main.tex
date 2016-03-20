@@ -67,8 +67,8 @@ Algorytm rozwiązania zadania jest następujący:
 \begin{enumerate}
 \item Na podstawie grafu wejściowego konstruujemy sieć przepływową, przy czym jednej krawędzi nieskierowanej grafu wejściowego odpowiadają dwie krawędzie przeciwnie skierowane w sieci przepływowej
 \item Każdej krawędzi w sieci przepływowej nadajemy wagę o wartości 1
-\item Wybieramy jeden, dowolny wierzchołek. Oznaczamy go jako źródło S.
-\item Dla każdej pary wierzchołków sieci przepływowej złożonej z wyróżnionego źródła S i dowolnego innego wierzchołka (różnego od wyróżnionego) wyznaczamy maksymalny przepływ między nimi przy użyciu algorytmu Forda-Fulkersona
+\item Wybieramy jeden dowolny wierzchołek. Oznaczamy go jako źródło $s$
+\item Dla każdej pary wierzchołków sieci przepływowej złożonej z wyróżnionego źródła $s$ i dowolnego innego wierzchołka $t$ ($t \neq s$) wyznaczamy maksymalny przepływ między nimi przy użyciu algorytmu Forda-Fulkersona
 \item Ze wszystkich wyznaczonych maksymalnych przepływów wybieramy ten o minimalnej wartości
 \item Określamy spójność krawędziową grafu wejściowego, która jest równa przepływowi wyznaczonemu w poprzednim kroku
 \end{enumerate}
@@ -95,7 +95,8 @@ Wyznaczenie spójności krawędziowej przy pomocy przepływu możliwe jest przy 
 Przepustowością przekroju nazywamy sumę wag wszystkich krawędzi o początku w $S$ i końcu w $T$.
 }\\\\
 
-Ponieważ w skonstruowanej sieci przepływowej wszystkie krawędzie mają przepustowości o wartości 1, maksymalny przepływ jest równy minimalnej liczbie krawędzi, których usunięcie spowoduje rozspójnienie grafu. Ponieważ w przypadku rozspójnienia grafu k-spójnego w wyniku usunięcia k krawędzi zawsze otrzymujemy przynajmniej dwa wynikowe grafy, z których tylko jeden zawiera wyróżniony wcześniej wierzchołek S, oraz nie posiada wierzchołka T będącego ujściem, można zauważyć, że w przypadku dowolnego wyboru wierzchołka S zawsze będzie istniał inny wierzchołek T który w wyniku usunięcia krawędzi przynależał będzie do nowopowstałej części. Tak więc wystarczy dla wybranego źródła S sprawdzić wszystkie możliwe kombinacje wierzchołków T a następnie wybrać tę, która daje najmniejszą wartość k-spójności. \\
+Ponieważ w skonstruowanej sieci przepływowej wszystkie krawędzie mają przepustowości o wartości 1, maksymalny przepływ jest równy minimalnej liczbie krawędzi, których usunięcie spowoduje rozspójnienie grafu.\\
+Ponieważ w przypadku rozspójnienia grafu k-spójnego w wyniku usunięcia k krawędzi zawsze otrzymujemy przynajmniej dwa wynikowe grafy, z których tylko jeden zawiera wyróżniony wcześniej wierzchołek źródłowy $s$, oraz nie posiada wierzchołka $t$ będącego ujściem, można zauważyć, że w przypadku dowolnego wyboru wierzchołka $s$ zawsze będzie istniał inny wierzchołek $t$ który w wyniku usunięcia krawędzi przynależał będzie do nowopowstałej części. Tak więc wystarczy dla wybranego źródła $s$ sprawdzić wszystkie możliwe kombinacje wierzchołków $t$ a następnie wybrać tę, która daje najmniejszą wartość k-spójności. \\
 
 
 \subsection{Analiza złożoności czasowej}
@@ -103,17 +104,18 @@ Ponieważ w skonstruowanej sieci przepływowej wszystkie krawędzie mają przepu
 
 Złożoności czasowe poszczególnych kroków algorytmu: 
 \begin{enumerate}
-\item Konstrukcja sieci przepływowej: $O(V+E)$
+\item Konstrukcja sieci przepływowej: $O(|V|+|E|)$
 \item Ustalenie wag krawędzi sieci przepływowej: $O(|E'|)$
-\item Wyznaczenie maksymalnego przepływu między wszystkimi parami wierzchołków: 
+\item Wybranie wierzchołka $s$: $O(1)$
+\item Wyznaczenie maksymalnego przepływu między wybranymi parami wierzchołków: 
 \begin{itemize}
-    \item przejście po wszystkich parach: $O(\frac{|V|^{2}}{2})$
-    \item obliczenie maksymalnego przepływu: $O(|V|\cdot |E'|\cdot |M|)$, gdzie $M$ - maksymalna pojemność krawędzi w grafie przepływowym
+    \item przejście po wszystkich wierzchołkach $t \neq s$: $O(|V|)$
+    \item obliczenie maksymalnego przepływu: $O(|V|\cdot |E'|\cdot M)$, \\gdzie $M$ - maksymalna pojemność krawędzi w grafie przepływowym
 \end{itemize}
-W tym rozwiązaniu wszystkie pojemności krawędzi grafu przepływowego mają wartość 1, zatem sumaryczna złożoność tego kroku to: $O(\frac{|V|^{2}}{2}\cdot|V|\cdot |E'|) \approx O(|V|^{3}\cdot |E'|)$
-\item Wybór minimalnego przepływu spośród wyznaczonych w poprzednim kroku: $O(\frac{|V|^{2}}{2})$
+W tym rozwiązaniu wszystkie pojemności krawędzi grafu przepływowego mają wartość 1, zatem sumaryczna złożoność tego kroku to: \\$O(|V|\cdot|V|\cdot |E'|) = O(|V|^{2}\cdot |E'|)$
+\item Wybór minimalnego przepływu spośród wyznaczonych w poprzednim kroku: $O(|V|)$
 \end{enumerate}
-Zatem całkowita złożoność czasowa jest rzędu $O(|V|^{3}\cdot |E'|)$, gdzie $|E'|=2\cdot |E|$.\\
+Zatem całkowita złożoność czasowa jest rzędu $O(|V|^{2}\cdot |E'|)$, gdzie $|E'|=2\cdot |E|$.\\
 
 
 \section{Format danych wejściowych i wyjściowych}
