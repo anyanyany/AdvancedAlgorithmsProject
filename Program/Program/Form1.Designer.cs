@@ -43,7 +43,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 294F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 193F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 318F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 8F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 19F));
             this.tableLayoutPanel1.Controls.Add(this.uploadGraphButton, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.listOfEgdes, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.computeButton, 2, 0);
@@ -70,7 +70,7 @@
             this.uploadGraphButton.Name = "uploadGraphButton";
             this.uploadGraphButton.Size = new System.Drawing.Size(284, 44);
             this.uploadGraphButton.TabIndex = 0;
-            this.uploadGraphButton.Text = "UPLOAD GRAPH";
+            this.uploadGraphButton.Text = "LOAD GRAPH";
             this.uploadGraphButton.UseVisualStyleBackColor = false;
             this.uploadGraphButton.Click += new System.EventHandler(this.uploadGraphButton_Click);
             // 
