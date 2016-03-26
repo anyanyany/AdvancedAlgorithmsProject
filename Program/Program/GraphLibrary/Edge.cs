@@ -31,5 +31,10 @@ namespace Program.GraphLibrary
             this.IsDirected = isDirected;
             this.Weight = weight;
         }
+
+        public override string ToString()
+        {
+            return From.ToString() + "-->" + To.ToString();
+        }
     }
 }
