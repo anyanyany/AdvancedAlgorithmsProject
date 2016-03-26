@@ -1,0 +1,9 @@
+C:\Users\Anna\Desktop\AdvancedAlgorithmsProject\Program\Program\bin\Debug\Program.exe.config
+C:\Users\Anna\Desktop\AdvancedAlgorithmsProject\Program\Program\bin\Debug\Program.exe
+C:\Users\Anna\Desktop\AdvancedAlgorithmsProject\Program\Program\bin\Debug\Program.pdb
+C:\Users\Anna\Desktop\AdvancedAlgorithmsProject\Program\Program\obj\Debug\Program.csprojResolveAssemblyReference.cache
+C:\Users\Anna\Desktop\AdvancedAlgorithmsProject\Program\Program\obj\Debug\Program.Form1.resources
+C:\Users\Anna\Desktop\AdvancedAlgorithmsProject\Program\Program\obj\Debug\Program.Properties.Resources.resources
+C:\Users\Anna\Desktop\AdvancedAlgorithmsProject\Program\Program\obj\Debug\Program.csproj.GenerateResource.Cache
+C:\Users\Anna\Desktop\AdvancedAlgorithmsProject\Program\Program\obj\Debug\Program.exe
+C:\Users\Anna\Desktop\AdvancedAlgorithmsProject\Program\Program\obj\Debug\Program.pdb
