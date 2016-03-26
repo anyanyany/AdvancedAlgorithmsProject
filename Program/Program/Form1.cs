@@ -94,7 +94,21 @@ namespace Program
                 flowNetworkGraph.AddEdge(e2);
             }
 
+            Random rand = new Random();
+            int source = rand.Next((int)flowNetworkGraph.VerticesCount);
+            int minMaxFlow = int.MaxValue;
 
+            for(int t=0;t<flowNetworkGraph.VerticesCount;t++)
+            {
+                if (t == source)
+                    continue;
+                //find max flow between s and t  
+                int maxFlow = 0;
+                if (maxFlow < minMaxFlow)
+                    minMaxFlow = maxFlow;
+            }
+
+            //resultLabel.Text = minMaxFlow.ToString();
             resultLabel.Text = "k";
         }
     }
