@@ -30,6 +30,15 @@ namespace Program.GraphLibrary
                 _edgesMatrix[e.To, e.From] = e;
         }
 
+        public void UpdateEdgeWeight(int from, int to, int weight)
+        {
+            if (_edgesMatrix[from, to] == null)
+                throw new ArgumentException("There is no such edge in the graph!");
+            _edgesMatrix[from, to].Weight = weight;
+            if (!_edgesMatrix[from, to].IsDirected)
+                _edgesMatrix[to, from].Weight += weight;
+        }
+
         public uint AddVertex()
         {
             this.VerticesCount++;

@@ -41,5 +41,44 @@ namespace Program.GraphLibrary
 
             return verticePath[endingVertice];
         }
+
+        public static int EdmondsKarp(IGraph graph, int source, int target)
+        {
+            int maxFlow = 0;
+
+            //create flow graph
+            MatrixGraph flow = new MatrixGraph(graph.VerticesCount, graph.GetEdges());
+            foreach (Edge edge in flow.GetEdges())
+            {
+                edge.Weight = 0;
+            }
+            //create residual graph
+            MatrixGraph residual = new MatrixGraph(graph.VerticesCount, graph.GetEdges());
+
+            while (true)
+            {
+                List<Edge> augmentingPath = BFS(residual, source, target);
+                if(augmentingPath==null)
+                    return maxFlow;
+
+                int minWeight= int.MaxValue;
+                foreach (Edge edge in augmentingPath)
+                {
+                    if (edge.Weight < minWeight)
+                        minWeight = edge.Weight;
+                }
+                maxFlow += minWeight;
+
+                foreach (Edge edge in augmentingPath)
+                {
+                    residual.UpdateEdgeWeight(edge.From, edge.To, -minWeight);
+                    residual.UpdateEdgeWeight(edge.To, edge.From, minWeight);
+                    flow.UpdateEdgeWeight(edge.From, edge.To, minWeight); //???
+                }
+
+            }
+
+            return maxFlow;
+        }
     }
 }

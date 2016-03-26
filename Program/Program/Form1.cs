@@ -54,7 +54,7 @@ namespace Program
                 graph = new MatrixGraph((uint)numberOfVertices);
                 for (int i = 0; i < edges.GetLength(0); i++)
                 {
-                    graph.AddEdge(new Edge((uint)edges[i, 0], (uint)edges[i, 1]));
+                    graph.AddEdge(new Edge(edges[i, 0], edges[i, 1]));
                     listOfEgdes.Items.Add(""+edges[i,0].ToString()+"<------>" + edges[i, 1].ToString());
                 }
 
@@ -103,13 +103,17 @@ namespace Program
                 if (t == source)
                     continue;
                 //find max flow between s and t  
+
+                //int maxFlow = Algorithms.EdmondsKarp(flowNetworkGraph, source, t);
                 int maxFlow = 0;
                 if (maxFlow < minMaxFlow)
                     minMaxFlow = maxFlow;
             }
 
-            //resultLabel.Text = minMaxFlow.ToString();
-            resultLabel.Text = "k";
+            resultLabel.Text = minMaxFlow.ToString();
+            //resultLabel.Text = "k";
+
+            List<Edge> augmentingPath = Algorithms.BFS(graph, 0, 2);
         }
     }
 }
