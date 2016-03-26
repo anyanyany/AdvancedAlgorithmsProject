@@ -54,7 +54,7 @@ Celem projektu jest zaprojektowanie i zaimplementowanie algorytmu znajdującego 
 
 Daną wejściową problemu jest nieskierowany graf bez wag $G=(V,E)$. Na jego podstawie utworzona będzie sieć przepływowa, czyli graf skierowany $G'=(V,E')$ z dodatnimi wagami określającymi przepustowości (pojemności) krawędzi i wyróżnionymi dwoma wierzchołkami: źródłem i ujściem. Następnie wyznaczony zostanie przepływ. Jest to fukcja $f$ określona na zbiorze $E'$ krawędzi grafu $G'$ taka, że:
 \begin{itemize}
-    \item dla każdego $e\in E'$ zachodzi $0\le f(e)\le waga(e)$
+    \item dla każdego $e\in E'$ zachodzi $0\le f(e)\le$ przepustowość$(e)$
     \item dla każdego wierzchołka wewnętrznego (tzn. każdego oprócz źródła i ujścia) sumaryczny przepływ dopływający do tego wierzchołka jest równy sumarycznemu przepływowi wypływającemu z niego
 \end{itemize}
 Na podstawie przepływu możliwe będzie wyznaczenie spójności krawędziowej grafu wejściowego.
@@ -66,9 +66,9 @@ Na podstawie przepływu możliwe będzie wyznaczenie spójności krawędziowej g
 Algorytm rozwiązania zadania jest następujący:
 \begin{enumerate}
 \item Na podstawie grafu wejściowego konstruujemy sieć przepływową, przy czym jednej krawędzi nieskierowanej grafu wejściowego odpowiadają dwie krawędzie przeciwnie skierowane w sieci przepływowej
-\item Każdej krawędzi w sieci przepływowej nadajemy wagę o wartości 1
+\item Wartości przepustowości każdej krawędzi w sieci przepływowej ustalamy na 1
 \item Wybieramy jeden dowolny wierzchołek. Oznaczamy go jako źródło $s$
-\item Dla każdej pary wierzchołków sieci przepływowej złożonej z wyróżnionego źródła $s$ i dowolnego innego wierzchołka $t$ ($t \neq s$) wyznaczamy maksymalny przepływ między nimi przy użyciu algorytmu Forda-Fulkersona
+\item Dla każdej pary wierzchołków sieci przepływowej złożonej z wyróżnionego źródła $s$ i dowolnego innego wierzchołka $t$ ($t \neq s$) wyznaczamy maksymalny przepływ między nimi przy użyciu algorytmu Edmondsa-Karpa, będącego realizacją metody Forda-Fulkersona
 \item Ze wszystkich wyznaczonych maksymalnych przepływów wybieramy ten o minimalnej wartości
 \item Określamy spójność krawędziową grafu wejściowego, która jest równa przepływowi wyznaczonemu w poprzednim kroku
 \end{enumerate}
@@ -92,11 +92,20 @@ Wyznaczenie spójności krawędziowej przy pomocy przepływu możliwe jest przy 
     \item $s\in S$, gdzie $s$ - źródło
     \item $t\in T$, gdzie $t$ - ujście
 \end{itemize}
-Przepustowością przekroju nazywamy sumę wag wszystkich krawędzi o początku w $S$ i końcu w $T$.
+Przepustowością przekroju nazywamy sumę przepustowości wszystkich krawędzi o początku w $S$ i końcu w $T$.
 }\\\\
 
-Ponieważ w skonstruowanej sieci przepływowej wszystkie krawędzie mają przepustowości o wartości 1, maksymalny przepływ jest równy minimalnej liczbie krawędzi, których usunięcie spowoduje rozspójnienie grafu.\\
-Ponieważ w przypadku rozspójnienia grafu k-spójnego w wyniku usunięcia k krawędzi zawsze otrzymujemy przynajmniej dwa wynikowe grafy, z których tylko jeden zawiera wyróżniony wcześniej wierzchołek źródłowy $s$, oraz nie posiada wierzchołka $t$ będącego ujściem, można zauważyć, że w przypadku dowolnego wyboru wierzchołka $s$ zawsze będzie istniał inny wierzchołek $t$ który w wyniku usunięcia krawędzi przynależał będzie do nowopowstałej części. Tak więc wystarczy dla wybranego źródła $s$ sprawdzić wszystkie możliwe kombinacje wierzchołków $t$ a następnie wybrać tę, która daje najmniejszą wartość k-spójności. \\
+
+Niech spójność krawędziowa grafu $G$ wynosi k, a wynik zwrócony przez algorytm to $f$ i niech $t$ będzie ujściem, dla którego mamy przepływ o wartości $f$.
+
+Ponieważ  w  skonstruowanej  sieci  przepływowej  wszystkie  krawędzie  mają
+przepustowości o wartości 1, to wartość minimalnej przepustowości
+przekroju jest równa liczbie krawędzi w minimalnym przekroju. Usunięcie
+tych krawędzi rozspójnia graf $G$, więc $k \le f$.
+
+Ponieważ w przypadku rozspójnienia grafu k-spójnego w wyniku usunięcia k krawędzi zawsze otrzymujemy przynajmniej dwie wynikowe składowe, z których tylko jedna zawiera wyróżniony wcześniej wierzchołek źródłowy $s$, oraz nie posiada wierzchołka $t$ będącego ujściem, można zauważyć, że w przypadku dowolnego wyboru wierzchołka $s$ zawsze będzie istniał inny wierzchołek $t$ który w wyniku usunięcia krawędzi przynależał będzie do nowopowstałej składowej. Tak więc wystarczy dla wybranego źródła $s$ sprawdzić wszystkie możliwe kombinacje wierzchołków $t$ a następnie wybrać tę, która daje najmniejszą wartość przepustowości przekroju. 
+
+Zatem istnieje zbiór $A$ k krawędzi których usunięcie rozspójnia graf. Wierzchołek $s$ jest w pewnej składowej $G-A$, więc dla dowolnego wierzchołka $t$ z innej składowej wartość minimalnego przekroju w sieci o źródle $s$ i ujściu $t$ będzie mniejszy lub równy $k$, więc $f \le k$.
 
 
 \subsection{Analiza złożoności czasowej}
@@ -110,12 +119,12 @@ Złożoności czasowe poszczególnych kroków algorytmu:
 \item Wyznaczenie maksymalnego przepływu między wybranymi parami wierzchołków: 
 \begin{itemize}
     \item przejście po wszystkich wierzchołkach $t \neq s$: $O(|V|)$
-    \item obliczenie maksymalnego przepływu: $O(|V|\cdot |E'|\cdot M)$, \\gdzie $M$ - maksymalna pojemność krawędzi w grafie przepływowym
+    \item obliczenie maksymalnego przepływu: $O(|E'|\cdot f)$, \\gdzie $f$ - minimalna przepustowość przekroju, $f \le |E|$ 
 \end{itemize}
-W tym rozwiązaniu wszystkie pojemności krawędzi grafu przepływowego mają wartość 1, zatem sumaryczna złożoność tego kroku to: \\$O(|V|\cdot|V|\cdot |E'|) = O(|V|^{2}\cdot |E'|)$
+Sumaryczna złożoność tego kroku to: $O(|V|\cdot|E'|\cdot |E|)$
 \item Wybór minimalnego przepływu spośród wyznaczonych w poprzednim kroku: $O(|V|)$
 \end{enumerate}
-Zatem całkowita złożoność czasowa jest rzędu $O(|V|^{2}\cdot |E'|)$, gdzie $|E'|=2\cdot |E|$.\\
+Zatem całkowita złożoność czasowa jest rzędu $O(|V|\cdot|E'|\cdot |E|)$, gdzie $|E'|=2\cdot |E|$.\\
 
 
 \section{Format danych wejściowych i wyjściowych}
@@ -131,7 +140,6 @@ Przykładowy plik wejściowy:\\
 3 1\\
 4 2\\
 2 0\\
-2 3\\
 }
 
 
