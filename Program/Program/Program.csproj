@@ -52,7 +52,13 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+<<<<<<< HEAD
     <Compile Include="Parser.cs" />
+=======
+    <Compile Include="GraphLibrary\Edge.cs" />
+    <Compile Include="GraphLibrary\IGraph.cs" />
+    <Compile Include="GraphLibrary\MatrixGraph.cs" />
+>>>>>>> d784b92dfde0aad5a16c16bd07bdb852075fa7fa
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
