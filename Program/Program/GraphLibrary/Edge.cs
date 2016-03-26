@@ -14,8 +14,8 @@ namespace Program.GraphLibrary
     public class Edge
     {
         public bool IsDirected { get; private set; }
-        public uint From { get; private set; }
-        public uint To { get; private set; }
+        public int From { get; private set; }
+        public int To { get; private set; }
         public int Weight { get; set; }
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace Program.GraphLibrary
         /// <param name="from">edge starting point</param>
         /// <param name="to">edge ending point</param>
         /// <param name="isDirected">information if edge is directed</param>
-        public Edge(uint from, uint to, bool isDirected = false, int weight = 0)
+        public Edge(int from, int to, bool isDirected = false, int weight = 0)
         {
             this.From = from;
             this.To = to;
