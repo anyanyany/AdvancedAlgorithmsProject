@@ -9,12 +9,18 @@ namespace Program.GraphLibrary
     class MatrixGraph : IGraph
     {
         public uint VerticesCount { get; private set; }
-        private Edge[,] _edgesMatrix;
+        public bool IsDirected { get; private set; }
+        private int[,] _edgesMatrix;
 
-        public MatrixGraph(uint verticesCount, List<Edge> edges = null)
+        public MatrixGraph(uint verticesCount, bool isDirected = false, List<Edge> edges = null)
         {
             this.VerticesCount = verticesCount;
-            _edgesMatrix = new Edge[VerticesCount, VerticesCount];
+            this.IsDirected = isDirected;
+            _edgesMatrix = new int[VerticesCount, VerticesCount];
+
+            for (int i = 0; i < VerticesCount; i++)
+                for (int j = 0; j < VerticesCount; j++)
+                    _edgesMatrix[i, j] = -1;
 
             if (null != edges)
                 foreach (Edge e in edges)
@@ -25,46 +31,68 @@ namespace Program.GraphLibrary
         {
             if (DoesEdgeCollide(e))
                 throw new ArgumentException("Edge collides with another one in the graph");
-            _edgesMatrix[e.From, e.To] = e;
-            if (!e.IsDirected)
-                _edgesMatrix[e.To, e.From] = e;
+            _edgesMatrix[e.From, e.To] = e.Weight;
+            if (!this.IsDirected)
+                _edgesMatrix[e.To, e.From] = e.Weight;
+        }
+
+        public void DeleteEdge(int from, int to)
+        {
+            if (_edgesMatrix[from, to] == -1)
+                throw new ArgumentException("There is no such edge in the graph!");
+            _edgesMatrix[from, to] = -1;
+            if (!this.IsDirected)
+                _edgesMatrix[to, from] = -1;
         }
 
         public void UpdateEdgeWeight(int from, int to, int weight)
         {
-            if (_edgesMatrix[from, to] == null)
+            if (_edgesMatrix[from, to] == -1)
                 throw new ArgumentException("There is no such edge in the graph!");
-            _edgesMatrix[from, to].Weight = weight;
-            if (!_edgesMatrix[from, to].IsDirected)
-                _edgesMatrix[to, from].Weight += weight;
+            _edgesMatrix[from, to] += weight;
+            if (!this.IsDirected)
+                _edgesMatrix[to, from] += weight;
         }
 
-        public uint AddVertex()
+        public int GetEdgeWeight(int from, int to)
         {
-            this.VerticesCount++;
-            Edge[,] tmp = _edgesMatrix;
-            _edgesMatrix = new Edge[VerticesCount, VerticesCount];
-            for (int i = 0; i < VerticesCount - 1; i++)
-                for (int j = 0; j < VerticesCount - 1; j++)
-                    _edgesMatrix[i, j] = tmp[i, j];
-
-            return VerticesCount - 1;
+            if (_edgesMatrix[from, to] == -1)
+                throw new ArgumentException("There is no such edge in the graph!");
+            return _edgesMatrix[from, to];
         }
 
-        public List<Edge> GetEdges(int vertexNumber = -1)
+        public bool DoesEdgeExist(int from, int to)
         {
-            if (vertexNumber != -1)
-                CheckVertexNumberSanity(vertexNumber);
+            if (_edgesMatrix[from, to] == -1)
+                return false;
+            return true;
+        }
 
-            HashSet<Edge> edgeSet = new HashSet<Edge>();
-            for (int i = 0; i < VerticesCount; i++)
+        public List<Edge> GetEdges()
+        {
+            List<Edge> edgeList = new List<Edge>();
+            if (!this.IsDirected)
             {
-                if (vertexNumber != -1 && i != vertexNumber) continue;
-                edgeSet.UnionWith(GetInEdges(i));
-                edgeSet.UnionWith(GetOutEdges(i));
+                for (int i = 0; i < VerticesCount; i++)
+                    for (int j = i; j < VerticesCount; j++)
+                    {
+                        if (_edgesMatrix[i, j] != -1)
+                            edgeList.Add(new Edge(i, j, _edgesMatrix[i, j]));
+                    }
+            }
+            else
+            {
+                for (int i = 0; i < VerticesCount; i++)
+                    for (int j = 0; j < VerticesCount; j++)
+                    {
+                        if (_edgesMatrix[i, j] != -1)
+                            edgeList.Add(new Edge(i, j, _edgesMatrix[i, j]));
+                    }
             }
 
-            return new List<Edge>(edgeSet);
+            if (edgeList.Count == 0)
+                return null;
+            return edgeList;
         }
 
         public List<Edge> GetInEdges(int vertexNumber)
@@ -73,9 +101,11 @@ namespace Program.GraphLibrary
 
             List<Edge> edges = new List<Edge>();
             for (int i = 0; i < VerticesCount; i++)
-                if (_edgesMatrix[i, vertexNumber] != null)
-                    edges.Add(_edgesMatrix[i, vertexNumber]);
+                if (_edgesMatrix[i, vertexNumber] != -1)
+                    edges.Add(new Edge(i, vertexNumber, _edgesMatrix[i, vertexNumber]));
 
+            if (edges.Count == 0)
+                return null;
             return edges;
         }
 
@@ -85,15 +115,17 @@ namespace Program.GraphLibrary
 
             List<Edge> edges = new List<Edge>();
             for (int i = 0; i < VerticesCount; i++)
-                if (_edgesMatrix[vertexNumber, i] != null)
-                    edges.Add(_edgesMatrix[vertexNumber, i]);
+                if (_edgesMatrix[vertexNumber, i] != -1)
+                    edges.Add(new Edge(vertexNumber, i, _edgesMatrix[vertexNumber, i]));
 
+            if (edges.Count == 0)
+                return null;
             return edges;
         }
 
         private bool DoesEdgeCollide(Edge e)
         {
-            return (_edgesMatrix[e.From, e.To] != null || (!e.IsDirected && _edgesMatrix[e.To, e.From] != null));
+            return (_edgesMatrix[e.From, e.To] != -1);
         }
 
         private void CheckVertexNumberSanity(int vertexNumber)

@@ -12,6 +12,7 @@ namespace Program.GraphLibrary
     public interface IGraph
     {
         uint VerticesCount { get; }
+        bool IsDirected { get; }
 
         /// <summary>
         /// Returns edges connected to vertex with specified number. 
@@ -22,7 +23,7 @@ namespace Program.GraphLibrary
         /// </summary>
         /// <param name="vertexNumber">vertex from which edges will be collected</param>
         /// <returns></returns>
-        List<Edge> GetEdges(int vertexNumber = -1);
+        List<Edge> GetEdges();
 
         /// <summary>
         /// Returns outgoing edges for specified vertex.
@@ -49,9 +50,12 @@ namespace Program.GraphLibrary
         /// <param name="e"></param>
         void AddEdge(Edge e);
 
-        /// <summary>
-        /// Adds vertex to graph and returns its number.
-        /// </summary>
-        uint AddVertex();
+        int GetEdgeWeight(int from, int to);
+
+        bool DoesEdgeExist(int from, int to);
+
+        void DeleteEdge(int from, int to);
+
+        void UpdateEdgeWeight(int from, int to, int weight);
     }
 }

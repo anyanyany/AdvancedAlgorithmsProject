@@ -51,7 +51,7 @@ namespace Program
                 }
 
                 //graph construction
-                graph = new MatrixGraph((uint)numberOfVertices);
+                graph = new MatrixGraph((uint)numberOfVertices, false);
                 for (int i = 0; i < edges.GetLength(0); i++)
                 {
                     graph.AddEdge(new Edge(edges[i, 0], edges[i, 1]));
@@ -88,8 +88,8 @@ namespace Program
             MatrixGraph flowNetworkGraph = new MatrixGraph(graph.VerticesCount);
             foreach (Edge edge in graph.GetEdges())
             {
-                Edge e1 = new Edge(edge.From, edge.To, true, 1);
-                Edge e2 = new Edge(edge.To, edge.From, true, 1);
+                Edge e1 = new Edge(edge.From, edge.To, 1);
+                Edge e2 = new Edge(edge.To, edge.From, 1);
                 flowNetworkGraph.AddEdge(e1);
                 flowNetworkGraph.AddEdge(e2);
             }

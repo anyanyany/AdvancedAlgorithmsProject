@@ -6,40 +6,57 @@ using System.Threading.Tasks;
 
 namespace Program.GraphLibrary
 {
-    /// <summary>
-    /// Class containing many graph algorithms.
-    /// </summary>
+
     public static class Algorithms
     {
-        /// <summary>
-        /// Runs BFS algorithm and returns the shortest path from starting to ending vertice in form
-        /// of edge list. If there is no such path null value is returned.
-        /// </summary>
-        /// <param name="graph"></param>
-        /// <param name="startingVertice"></param>
-        /// <param name="endingVertice"></param>
-        /// <returns></returns>
+        public static bool isConnected(IGraph graph)
+        {
+            for (int i = 0; i < graph.VerticesCount; i++)
+                if (graph.GetOutEdges(i) == null && graph.GetInEdges(i) == null)
+                    return false;
+            return true;
+        }
+
         public static List<Edge> BFS(IGraph graph, int startingVertice, int endingVertice)
         {
+            if (graph.GetOutEdges(startingVertice) == null)
+                return null;
+
             Queue<int> verticesStack = new Queue<int>();
-            List<Edge>[] verticePath = new List<Edge>[graph.VerticesCount];
-            verticePath[startingVertice] = new List<Edge>();
+            List<Edge> path = new List<Edge>();
+            Edge[] previous = new Edge[graph.VerticesCount];
+            int[] activeVertices = new int[graph.VerticesCount];
+            for (int i = 0; i < graph.VerticesCount; i++)
+            {
+                activeVertices[i] = 1;
+                previous[i] = null;
+            }
 
             verticesStack.Enqueue(startingVertice);
             while (verticesStack.Count > 0)
             {
-                int currentVertice = verticesStack.First();
-                if (currentVertice == endingVertice) break;
+                int currentVertice = verticesStack.Dequeue();
+                activeVertices[startingVertice] = 0;
                 foreach (Edge e in graph.GetOutEdges(currentVertice))
                 {
-                    if (verticePath[e.To] == null) continue;
-                    verticePath[e.To] = new List<Edge>();
-                    verticePath[e.To].AddRange(verticePath[currentVertice]);
-                    verticesStack.Enqueue((int)e.To);
+                    if (activeVertices[e.To] == 0)
+                        continue;
+                    activeVertices[e.To] = 0;
+                    previous[e.To] = e;
+                    verticesStack.Enqueue(e.To);
                 }
             }
 
-            return verticePath[endingVertice];
+            int current = endingVertice;
+            while (previous[current] != null)
+            {
+                path.Add(previous[current]);
+                current = previous[current].From;
+            }
+            path.Reverse();
+            if (path.Count >= 1)
+                return path;
+            return null;
         }
 
         public static int EdmondsKarp(IGraph graph, int source, int target)
@@ -47,38 +64,81 @@ namespace Program.GraphLibrary
             int maxFlow = 0;
 
             //create flow graph
-            MatrixGraph flow = new MatrixGraph(graph.VerticesCount, graph.GetEdges());
+            MatrixGraph flow = new MatrixGraph(graph.VerticesCount, true, graph.GetEdges());
             foreach (Edge edge in flow.GetEdges())
-            {
-                edge.Weight = 0;
-            }
+                flow.UpdateEdgeWeight(edge.From, edge.To, -edge.Weight);
+
             //create residual graph
-            MatrixGraph residual = new MatrixGraph(graph.VerticesCount, graph.GetEdges());
+            MatrixGraph residual = new MatrixGraph(graph.VerticesCount, true, graph.GetEdges());
 
             while (true)
             {
                 List<Edge> augmentingPath = BFS(residual, source, target);
-                if(augmentingPath==null)
+                if (augmentingPath == null)
                     return maxFlow;
 
-                int minWeight= int.MaxValue;
+                int minWeight = int.MaxValue;
                 foreach (Edge edge in augmentingPath)
                 {
                     if (edge.Weight < minWeight)
                         minWeight = edge.Weight;
                 }
+
                 maxFlow += minWeight;
 
+                //uptade residual and flow graph
                 foreach (Edge edge in augmentingPath)
                 {
-                    residual.UpdateEdgeWeight(edge.From, edge.To, -minWeight);
-                    residual.UpdateEdgeWeight(edge.To, edge.From, minWeight);
-                    flow.UpdateEdgeWeight(edge.From, edge.To, minWeight); //???
-                }
+                    if (residual.DoesEdgeExist(edge.From, edge.To))
+                    {
+                        residual.UpdateEdgeWeight(edge.From, edge.To, -minWeight);
+                        if (residual.GetEdgeWeight(edge.From, edge.To) == 0)
+                            residual.DeleteEdge(edge.From, edge.To);
+                    }
 
+                    if (!residual.DoesEdgeExist(edge.To, edge.From))
+                        residual.AddEdge(new Edge(edge.To, edge.From));
+                    residual.UpdateEdgeWeight(edge.To, edge.From, minWeight);
+
+                    flow.UpdateEdgeWeight(edge.From, edge.To, minWeight);
+                    flow.UpdateEdgeWeight(edge.To, edge.From, -minWeight);
+                }
+            }
+        }
+
+
+        public static int chceckConnectivity(IGraph graph)
+        {
+            int connectivity = 0;
+
+            if (!Algorithms.isConnected(graph))
+                return connectivity;
+
+            //create flow network
+            MatrixGraph flowNetworkGraph = new MatrixGraph(graph.VerticesCount, true);
+            foreach (Edge edge in graph.GetEdges())
+            {
+                flowNetworkGraph.AddEdge(new Edge(edge.From, edge.To, 1));
+                flowNetworkGraph.AddEdge(new Edge(edge.To, edge.From, 1));
             }
 
-            return maxFlow;
+            //pick random vertex
+            Random rand = new Random();
+            int source = rand.Next((int)flowNetworkGraph.VerticesCount);
+            int minMaxFlow = int.MaxValue;
+
+            for (int target = 0; target < flowNetworkGraph.VerticesCount; target++)
+            {
+                if (target == source)
+                    continue;
+                //find max flow between s and t  
+                int maxFlow = Algorithms.EdmondsKarp(flowNetworkGraph, source, target);
+                if (maxFlow < minMaxFlow)
+                    minMaxFlow = maxFlow;
+            }
+
+            connectivity = minMaxFlow;
+            return connectivity;
         }
     }
 }
