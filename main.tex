@@ -121,10 +121,10 @@ Złożoności czasowe poszczególnych kroków algorytmu:
     \item przejście po wszystkich wierzchołkach $t \neq s$: $O(|V|)$
     \item obliczenie maksymalnego przepływu za pomocą algorytmu Edmondsa-Karpa: $O(|V|\cdot|E'|^{2})$
 \end{itemize}
-Sumaryczna złożoność tego kroku to: $O(|V^{3}|\cdot|E'|)$
+Sumaryczna złożoność tego kroku to: $O(|V^{2}|\cdot|E'|^{2})$
 \item Wybór minimalnego przepływu spośród wyznaczonych w poprzednim kroku: $O(1)$
 \end{enumerate}
-Zatem całkowita złożoność czasowa jest rzędu $O(|V^{3}|\cdot|E'|)$, gdzie $|E'|=2\cdot |E|$.\\
+Zatem całkowita złożoność czasowa jest rzędu $O(|V^{2}|\cdot|E'|^{2})$, gdzie $|E'|=2\cdot |E|$.\\
 
 
 \section{Format danych wejściowych i wyjściowych}
