@@ -51,11 +51,11 @@ namespace Program
                 }
 
                 //graph construction
-                graph = new MatrixGraph((uint)numberOfVertices, false);
+                graph = new MatrixGraph((uint)numberOfVertices);
                 for (int i = 0; i < edges.GetLength(0); i++)
                 {
                     graph.AddEdge(new Edge(edges[i, 0], edges[i, 1]));
-                    listOfEgdes.Items.Add(""+edges[i,0].ToString()+"<------>" + edges[i, 1].ToString());
+                    listOfEgdes.Items.Add("" + edges[i, 0].ToString() + "<------>" + edges[i, 1].ToString());
                 }
 
 
@@ -64,7 +64,7 @@ namespace Program
 
         private void computeButton_Click(object sender, EventArgs e)
         {
-            if(graph==null)
+            if (graph == null)
             {
                 MessageBox.Show("There is no graph!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -75,7 +75,7 @@ namespace Program
             //check if graph is disconnected
             for (int i = 0; i < graph.VerticesCount; i++)
             {
-                if (graph.GetOutEdges(i).Capacity == 0)
+                if (graph.GetVertexDegree(i) == 0)
                 {
                     resultLabel.Text = "0";
                     return;
@@ -83,29 +83,18 @@ namespace Program
             }
 
             //graph is connected - we can compute the edge connectivity
-
-            //create flow network
-            MatrixGraph flowNetworkGraph = new MatrixGraph(graph.VerticesCount);
-            foreach (Edge edge in graph.GetEdges())
-            {
-                Edge e1 = new Edge(edge.From, edge.To, 1);
-                Edge e2 = new Edge(edge.To, edge.From, 1);
-                flowNetworkGraph.AddEdge(e1);
-                flowNetworkGraph.AddEdge(e2);
-            }
-
             Random rand = new Random();
-            int source = rand.Next((int)flowNetworkGraph.VerticesCount);
+            int source = rand.Next((int)graph.VerticesCount);
             int minMaxFlow = int.MaxValue;
 
-            for(int t=0;t<flowNetworkGraph.VerticesCount;t++)
+            for (int t = 0; t < graph.VerticesCount; t++)
             {
                 if (t == source)
                     continue;
                 //find max flow between s and t  
 
                 //int maxFlow = Algorithms.EdmondsKarp(flowNetworkGraph, source, t);
-                int maxFlow = 0;
+                int maxFlow = Algorithms.EdmondsKarp(graph, source, t);
                 if (maxFlow < minMaxFlow)
                     minMaxFlow = maxFlow;
             }

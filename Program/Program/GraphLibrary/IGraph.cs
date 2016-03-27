@@ -44,6 +44,15 @@ namespace Program.GraphLibrary
         List<Edge> GetInEdges(int vertexNumber);
 
         /// <summary>
+        /// Returns number of incoming and outgoing
+        /// edges from specified vertex. If provided 
+        /// vertex number does not exist, exception is thrown.
+        /// </summary>
+        /// <param name="vertexNumber"></param>
+        /// <returns></returns>
+        uint GetVertexDegree(int vertexNumber);
+
+        /// <summary>
         /// Adds edge to graph. If edge between e.From and e.To
         /// vertices already exists, exception is thrown.
         /// </summary>

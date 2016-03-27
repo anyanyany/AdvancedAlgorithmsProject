@@ -63,9 +63,7 @@ namespace Program.GraphLibrary
 
         public bool DoesEdgeExist(int from, int to)
         {
-            if (_edgesMatrix[from, to] == -1)
-                return false;
-            return true;
+            return (_edgesMatrix[from, to] != -1);
         }
 
         public List<Edge> GetEdges()
@@ -90,8 +88,6 @@ namespace Program.GraphLibrary
                     }
             }
 
-            if (edgeList.Count == 0)
-                return null;
             return edgeList;
         }
 
@@ -104,8 +100,6 @@ namespace Program.GraphLibrary
                 if (_edgesMatrix[i, vertexNumber] != -1)
                     edges.Add(new Edge(i, vertexNumber, _edgesMatrix[i, vertexNumber]));
 
-            if (edges.Count == 0)
-                return null;
             return edges;
         }
 
@@ -118,9 +112,14 @@ namespace Program.GraphLibrary
                 if (_edgesMatrix[vertexNumber, i] != -1)
                     edges.Add(new Edge(vertexNumber, i, _edgesMatrix[vertexNumber, i]));
 
-            if (edges.Count == 0)
-                return null;
             return edges;
+        }
+
+        public uint GetVertexDegree(int vertexNumber)
+        {
+            CheckVertexNumberSanity(vertexNumber);
+
+            return (uint) (GetOutEdges(vertexNumber).Capacity + GetInEdges(vertexNumber).Capacity);
         }
 
         private bool DoesEdgeCollide(Edge e)
