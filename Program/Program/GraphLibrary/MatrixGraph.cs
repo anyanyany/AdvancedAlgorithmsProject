@@ -119,7 +119,7 @@ namespace Program.GraphLibrary
         {
             CheckVertexNumberSanity(vertexNumber);
 
-            return (uint) (GetOutEdges(vertexNumber).Capacity + GetInEdges(vertexNumber).Capacity);
+            return (uint) (GetOutEdges(vertexNumber).Count + GetInEdges(vertexNumber).Count);
         }
 
         private bool DoesEdgeCollide(Edge e)

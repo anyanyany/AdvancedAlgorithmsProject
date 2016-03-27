@@ -19,7 +19,7 @@ namespace Program.GraphLibrary
 
         public static List<Edge> BFS(IGraph graph, int startingVertice, int endingVertice)
         {
-            if (graph.GetOutEdges(startingVertice) == null)
+            if (graph.GetOutEdges(startingVertice).Count == 0)
                 return null;
 
             Queue<int> verticesStack = new Queue<int>();
@@ -107,7 +107,7 @@ namespace Program.GraphLibrary
         }
 
 
-        public static int chceckConnectivity(IGraph graph)
+        public static int ChceckConnectivity(IGraph graph)
         {
             int connectivity = 0;
 

@@ -83,23 +83,7 @@ namespace Program
             }
 
             //graph is connected - we can compute the edge connectivity
-            Random rand = new Random();
-            int source = rand.Next((int)graph.VerticesCount);
-            int minMaxFlow = int.MaxValue;
-
-            for (int t = 0; t < graph.VerticesCount; t++)
-            {
-                if (t == source)
-                    continue;
-                //find max flow between s and t  
-
-                //int maxFlow = Algorithms.EdmondsKarp(flowNetworkGraph, source, t);
-                int maxFlow = Algorithms.EdmondsKarp(graph, source, t);
-                if (maxFlow < minMaxFlow)
-                    minMaxFlow = maxFlow;
-            }
-
-            resultLabel.Text = minMaxFlow.ToString();
+            resultLabel.Text = Algorithms.ChceckConnectivity(graph).ToString();
             //resultLabel.Text = "k";
 
             List<Edge> augmentingPath = Algorithms.BFS(graph, 0, 2);
