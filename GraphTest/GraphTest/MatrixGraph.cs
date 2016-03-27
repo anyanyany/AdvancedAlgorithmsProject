@@ -9,13 +9,13 @@ namespace GraphTest
     class MatrixGraph : IGraph
     {
         public uint VerticesCount { get; private set; }
-        public bool isDirected { get; private set; }
+        public bool IsDirected { get; private set; }
         private int[,] _edgesMatrix;
 
         public MatrixGraph(uint verticesCount, bool isDirected, List<Edge> edges = null)
         {
             this.VerticesCount = verticesCount;
-            this.isDirected = isDirected;
+            this.IsDirected = isDirected;
             _edgesMatrix = new int[VerticesCount, VerticesCount];
 
             for (int i = 0; i < VerticesCount; i++)
@@ -32,7 +32,7 @@ namespace GraphTest
             if (DoesEdgeCollide(e))
                 throw new ArgumentException("Edge collides with another one in the graph");
             _edgesMatrix[e.From, e.To] = e.Weight;
-            if (!this.isDirected)
+            if (!this.IsDirected)
                 _edgesMatrix[e.To, e.From] = e.Weight;
         }
 
@@ -41,7 +41,7 @@ namespace GraphTest
             if (_edgesMatrix[from, to] == -1)
                 throw new ArgumentException("There is no such edge in the graph!");
             _edgesMatrix[from, to] = -1;
-            if (!this.isDirected)
+            if (!this.IsDirected)
                 _edgesMatrix[to, from] = -1;
         }
 
@@ -50,7 +50,7 @@ namespace GraphTest
             if (_edgesMatrix[from, to] == -1)
                 throw new ArgumentException("There is no such edge in the graph!");
             _edgesMatrix[from, to] += weight;
-            if (!this.isDirected)
+            if (!this.IsDirected)
                 _edgesMatrix[to, from] += weight;
         }
 
@@ -61,7 +61,7 @@ namespace GraphTest
             return _edgesMatrix[from, to];
         }
 
-        public bool edgeExists(int from, int to)
+        public bool DoesEdgeExist(int from, int to)
         {
             if (_edgesMatrix[from, to] == -1)
                 return false;
@@ -71,7 +71,7 @@ namespace GraphTest
         public List<Edge> GetEdges()
         {
             List<Edge> edgeList = new List<Edge>();
-            if (!this.isDirected)
+            if (!this.IsDirected)
             {
                 for (int i = 0; i < VerticesCount; i++)
                     for (int j = i; j < VerticesCount; j++)

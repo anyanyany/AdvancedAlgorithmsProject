@@ -89,14 +89,14 @@ namespace GraphTest
                 //uptade residual and flow graph
                 foreach (Edge edge in augmentingPath)
                 {
-                    if (residual.edgeExists(edge.From, edge.To))
+                    if (residual.DoesEdgeExist(edge.From, edge.To))
                     {
                         residual.UpdateEdgeWeight(edge.From, edge.To, -minWeight);
                         if (residual.GetEdgeWeight(edge.From, edge.To) == 0)
                             residual.DeleteEdge(edge.From, edge.To);
                     }
 
-                    if (!residual.edgeExists(edge.To, edge.From))
+                    if (!residual.DoesEdgeExist(edge.To, edge.From))
                         residual.AddEdge(new Edge(edge.To, edge.From));
                     residual.UpdateEdgeWeight(edge.To, edge.From, minWeight);
 
@@ -104,7 +104,6 @@ namespace GraphTest
                     flow.UpdateEdgeWeight(edge.To, edge.From, -minWeight);
                 }
             }
-            return maxFlow;
         }
 
 

@@ -17,7 +17,7 @@ namespace GraphTest
         public int Weight { get; set; }
 
         /// <summary>
-        /// Creates edge from provided information. Edge is undirected by default.
+        /// Creates edge from provided information.
         /// </summary>
         /// <param name="from">edge starting point</param>
         /// <param name="to">edge ending point</param>

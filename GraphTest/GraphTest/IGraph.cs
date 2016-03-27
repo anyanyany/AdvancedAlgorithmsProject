@@ -12,7 +12,7 @@ namespace GraphTest
     public interface IGraph
     {
         uint VerticesCount { get; }
-        bool isDirected { get; }
+        bool IsDirected { get; }
 
         /// <summary>
         /// Returns edges connected to vertex with specified number. 
@@ -52,7 +52,7 @@ namespace GraphTest
 
         int GetEdgeWeight(int from, int to);
 
-        bool edgeExists(int from, int to);
+        bool DoesEdgeExist(int from, int to);
 
         void DeleteEdge(int from, int to);
 
