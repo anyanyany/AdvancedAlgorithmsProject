@@ -25,6 +25,7 @@ namespace Program
         {
             resultLabel.Text = "?";
             listOfEgdes.Items.Clear();
+            graph = null;
 
             OpenFileDialog theDialog = new OpenFileDialog
             {
@@ -57,36 +58,20 @@ namespace Program
                     graph.AddEdge(new Edge(edges[i, 0], edges[i, 1]));
                     listOfEgdes.Items.Add("" + edges[i, 0].ToString() + "<------>" + edges[i, 1].ToString());
                 }
-
-
             }
         }
 
         private void computeButton_Click(object sender, EventArgs e)
         {
+            resultLabel.Text = "?";
+
             if (graph == null)
             {
                 MessageBox.Show("There is no graph!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            resultLabel.Text = "?";
-
-            //check if graph is disconnected
-            for (int i = 0; i < graph.VerticesCount; i++)
-            {
-                if (graph.GetVertexDegree(i) == 0)
-                {
-                    resultLabel.Text = "0";
-                    return;
-                }
-            }
-
-            //graph is connected - we can compute the edge connectivity
             resultLabel.Text = Algorithms.ChceckConnectivity(graph).ToString();
-            //resultLabel.Text = "k";
-
-            List<Edge> augmentingPath = Algorithms.BFS(graph, 0, 2);
         }
     }
 }
