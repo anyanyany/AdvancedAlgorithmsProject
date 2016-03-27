@@ -36,6 +36,15 @@ namespace GraphTest
                 _edgesMatrix[e.To, e.From] = e.Weight;
         }
 
+        public void DeleteEdge(int from, int to)
+        {
+            if (_edgesMatrix[from, to] == -1)
+                throw new ArgumentException("There is no such edge in the graph!");
+            _edgesMatrix[from, to] = -1;
+            if (!this.isDirected)
+                _edgesMatrix[to, from] = -1;
+        }
+
         public void UpdateEdgeWeight(int from, int to, int weight)
         {
             if (_edgesMatrix[from, to] == -1)
@@ -45,6 +54,19 @@ namespace GraphTest
                 _edgesMatrix[to, from] += weight;
         }
 
+        public int GetEdgeWeight(int from, int to)
+        {
+            if (_edgesMatrix[from, to] == -1)
+                throw new ArgumentException("There is no such edge in the graph!");
+            return _edgesMatrix[from, to];
+        }
+
+        public bool edgeExists(int from, int to)
+        {
+            if (_edgesMatrix[from, to] == -1)
+                return false;
+            return true;
+        }
 
         public List<Edge> GetEdges()
         {

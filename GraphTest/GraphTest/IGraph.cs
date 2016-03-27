@@ -50,5 +50,12 @@ namespace GraphTest
         /// <param name="e"></param>
         void AddEdge(Edge e);
 
+        int GetEdgeWeight(int from, int to);
+
+        bool edgeExists(int from, int to);
+
+        void DeleteEdge(int from, int to);
+
+        void UpdateEdgeWeight(int from, int to, int weight);
     }
 }

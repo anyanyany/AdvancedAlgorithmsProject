@@ -10,7 +10,9 @@ namespace GraphTest
     {
         static void Main(string[] args)
         {
-            
+            int solution = 0;
+
+            Console.WriteLine("***graph1 - simple***");
             MatrixGraph graph = new MatrixGraph(5, false);
             graph.AddEdge(new Edge(0, 1));
             graph.AddEdge(new Edge(1, 2));
@@ -19,42 +21,68 @@ namespace GraphTest
             graph.AddEdge(new Edge(2, 3));
             graph.AddEdge(new Edge(4, 3));
 
-            //check if graph is disconnected
-            if (!Algorithms.isConnected(graph))
-            {
-                Console.WriteLine("edge connectivity 0");
-                return;
-            }
+            solution = Algorithms.chceckConnectivity(graph);
+            Console.WriteLine(solution + " " + (solution == 2));
 
-            //create flow network
-            MatrixGraph flowNetworkGraph = new MatrixGraph(graph.VerticesCount, true);
-            foreach (Edge edge in graph.GetEdges())
-            {
-                flowNetworkGraph.AddEdge(new Edge(edge.From, edge.To, 1));
-                flowNetworkGraph.AddEdge(new Edge(edge.To, edge.From, 1));
-            }
+            Console.WriteLine("***graph2 - bottleneck***");
+            MatrixGraph graph2 = new MatrixGraph(10, false);
+            graph2.AddEdge(new Edge(4, 0));
+            graph2.AddEdge(new Edge(4, 1));
+            graph2.AddEdge(new Edge(4, 2));
+            graph2.AddEdge(new Edge(4, 3));
+            graph2.AddEdge(new Edge(4, 5));
+            graph2.AddEdge(new Edge(0, 1));
+            graph2.AddEdge(new Edge(2, 1));
+            graph2.AddEdge(new Edge(2, 3));
+            graph2.AddEdge(new Edge(5, 6));
+            graph2.AddEdge(new Edge(5, 7));
+            graph2.AddEdge(new Edge(5, 8));
+            graph2.AddEdge(new Edge(5, 9));
+            graph2.AddEdge(new Edge(6, 7));
+            graph2.AddEdge(new Edge(7, 8));
+            graph2.AddEdge(new Edge(8, 9));
 
-            Random rand = new Random();
-            int source = rand.Next((int)flowNetworkGraph.VerticesCount);
-            int minMaxFlow = int.MaxValue;
+            solution = Algorithms.chceckConnectivity(graph2);
+            Console.WriteLine(solution + " " + (solution == 1));
 
-            for (int t = 0; t < flowNetworkGraph.VerticesCount; t++)
-            {
-                if (t == source)
-                    continue;
-                //find max flow between s and t  
-                int maxFlow = Algorithms.EdmondsKarp(flowNetworkGraph, source, t);
-                //int maxFlow = 0;
-                if (maxFlow < minMaxFlow)
-                    minMaxFlow = maxFlow;
-            }
+            Console.WriteLine("***graph3 - full***");
+            MatrixGraph graph3 = new MatrixGraph(10, false);
+            for (int i = 0; i < 10; i++)
+                for (int j = i + 1; j < 10; j++)
+                    graph3.AddEdge(new Edge(i, j));
+            solution = Algorithms.chceckConnectivity(graph3);
+            Console.WriteLine(solution + " " + (solution == 9));
 
-            /*Console.WriteLine("path");
-            List<Edge> augmentingPath = Algorithms.BFS(flowNetworkGraph, 3, 4);
-            foreach (Edge e in augmentingPath)
-                Console.WriteLine(e.ToString());*/
+            Console.WriteLine("***graph4 - full + 1 vertex and 2 edges***");
+            MatrixGraph graph4 = new MatrixGraph(11, false);
+            for (int i = 0; i < 10; i++)
+                for (int j = i + 1; j < 10; j++)
+                    graph4.AddEdge(new Edge(i, j));
+            graph4.AddEdge(new Edge(10, 0));
+            graph4.AddEdge(new Edge(10, 5));
+            solution = Algorithms.chceckConnectivity(graph4);
+            Console.WriteLine(solution + " " + (solution == 2));
 
-            Console.WriteLine(minMaxFlow);
+            Console.WriteLine("***graph5 - full + 1 isolated vertex***");
+            MatrixGraph graph5 = new MatrixGraph(11, false);
+            for (int i = 0; i < 10; i++)
+                for (int j = i + 1; j < 10; j++)
+                    graph5.AddEdge(new Edge(i, j));
+            solution = Algorithms.chceckConnectivity(graph5);
+            Console.WriteLine(solution + " " + (solution == 0));
+
+            Console.WriteLine("***graph6 - 2 full graphs connected by 1 edge***");
+            MatrixGraph graph6 = new MatrixGraph(20, false);
+            for (int i = 0; i < 10; i++)
+                for (int j = i + 1; j < 10; j++)
+                    graph6.AddEdge(new Edge(i, j));
+            for (int i =10; i < 20; i++)
+                for (int j = i + 1; j < 20; j++)
+                    graph6.AddEdge(new Edge(i, j));
+            graph6.AddEdge(new Edge(9, 10));
+            solution = Algorithms.chceckConnectivity(graph6);
+            Console.WriteLine(solution + " " + (solution == 1));
+
 
         }
     }

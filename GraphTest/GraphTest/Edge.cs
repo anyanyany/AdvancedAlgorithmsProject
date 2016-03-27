@@ -21,7 +21,8 @@ namespace GraphTest
         /// </summary>
         /// <param name="from">edge starting point</param>
         /// <param name="to">edge ending point</param>
-        /// <param name="isDirected">information if edge is directed</param>
+        /// <param name="weight">edge weight</param>
+
         public Edge(int from, int to, int weight = 0)
         {
             this.From = from;
