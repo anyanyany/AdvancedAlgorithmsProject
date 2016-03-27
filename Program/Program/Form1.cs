@@ -35,12 +35,12 @@ namespace Program
             if (theDialog.ShowDialog() == DialogResult.OK)
             {
                 string filename = theDialog.FileName;
-                int numberOfVertices = 0;
+                int numOfVertices = 0;
                 int[,] edges = null;
 
                 try
                 {
-                    numberOfVertices = new Parser().Parse(filename, out edges);
+                    numOfVertices = new Parser().Parse(filename, out edges);
                 }
                 catch (Exception)
                 {
@@ -50,7 +50,8 @@ namespace Program
                 }
 
                 //graph construction
-                graph = new MatrixGraph((uint)numberOfVertices);
+                graph = new MatrixGraph((uint)numOfVertices);
+                numberOfVertices.Value = numOfVertices;
                 for (int i = 0; i < edges.GetLength(0); i++)
                 {
                     graph.AddEdge(new Edge(edges[i, 0], edges[i, 1]));
