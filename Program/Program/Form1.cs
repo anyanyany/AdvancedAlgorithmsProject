@@ -23,9 +23,7 @@ namespace Program
 
         private void uploadGraphButton_Click(object sender, EventArgs e)
         {
-            resultLabel.Text = "?";
-            listOfEgdes.Items.Clear();
-            graph = null;
+            clearAllAndCreateNewGraph(true);
 
             OpenFileDialog theDialog = new OpenFileDialog
             {
@@ -72,6 +70,52 @@ namespace Program
             }
 
             resultLabel.Text = Algorithms.ChceckConnectivity(graph).ToString();
+        }
+
+        private void deleteEdgeButton_Click(object sender, EventArgs e)
+        {
+            if (listOfEgdes.SelectedIndex >= 0)
+            {
+                string selectedEdge = listOfEgdes.SelectedItem.ToString();
+                listOfEgdes.Items.RemoveAt(listOfEgdes.SelectedIndex);
+                int index = selectedEdge.IndexOf("<");
+                string eFrom = selectedEdge.Substring(0, index);
+                index = selectedEdge.IndexOf(">");
+                string eTo = selectedEdge.Substring(index+1);
+                graph.DeleteEdge(Int32.Parse(eFrom), Int32.Parse(eTo));
+            }
+        }
+
+        private void numberOfVerticesValueChanged(object sender, EventArgs e)
+        {
+            clearAllAndCreateNewGraph(false);
+            int noOfVertices = (int)numberOfVertices.Value;
+            edgeFrom.Maximum = noOfVertices - 1;
+            edgeTo.Maximum = noOfVertices - 1;
+        }
+
+        private void addEdgeButton_Click(object sender, EventArgs e)
+        {
+            if (edgeFrom.Value == edgeTo.Value)
+                return;
+            string newItem = edgeFrom.Value.ToString() + "<------>" + edgeTo.Value.ToString();
+            string reverseItem = edgeTo.Value.ToString() + "<------>" + edgeFrom.Value.ToString();
+            if (!listOfEgdes.Items.Contains(newItem) && !listOfEgdes.Items.Contains(reverseItem))
+            {
+                listOfEgdes.Items.Add(newItem);
+                if(graph==null)
+                    graph=new MatrixGraph((uint)numberOfVertices.Value);
+                graph.AddEdge(new Edge((int)edgeFrom.Value, (int)edgeTo.Value));
+            }
+        }
+
+        private void clearAllAndCreateNewGraph(bool graphUploaded)
+        {
+            graph = null;
+            if (!graphUploaded)
+                graph = new MatrixGraph((uint)numberOfVertices.Value);
+            listOfEgdes.Items.Clear();
+            resultLabel.Text = "?";
         }
     }
 }
