@@ -22,7 +22,6 @@ namespace Program.GraphLibrary
         /// <param name="from">edge starting point</param>
         /// <param name="to">edge ending point</param>
         /// <param name="weight">edge weight</param>
-
         public Edge(int from, int to, int weight = 0)
         {
             this.From = from;

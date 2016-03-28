@@ -52,6 +52,7 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="GraphGUI\Visualizer.cs" />
     <Compile Include="GraphLibrary\Algorithms.cs" />
     <Compile Include="Parser.cs" />
     <Compile Include="GraphLibrary\Edge.cs" />

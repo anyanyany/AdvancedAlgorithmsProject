@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Program.GraphLibrary;
+using Program.GraphGUI;
 
 namespace Program
 {
@@ -71,6 +72,8 @@ namespace Program
             }
 
             resultLabel.Text = Algorithms.ChceckConnectivity(graph).ToString();
+            Visualizer v = new Visualizer();
+            v.DrawGraph(graphImage, graph);
         }
 
         private void deleteEdgeButton_Click(object sender, EventArgs e)

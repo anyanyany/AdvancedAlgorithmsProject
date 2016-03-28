@@ -59,12 +59,38 @@ namespace Program.GraphLibrary
         /// <param name="e"></param>
         void AddEdge(Edge e);
 
+        /// <summary>
+        /// Returns weight of the edge connecting two specified
+        /// vertices. Throws exception if there is no such edge.
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <returns></returns>
         int GetEdgeWeight(int from, int to);
 
+        /// <summary>
+        /// Returns information if specified edge exists in the graph.
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <returns></returns>
         bool DoesEdgeExist(int from, int to);
 
+        /// <summary>
+        /// Deletes specified edge, or throws exception
+        /// if there is no edge to delete.
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
         void DeleteEdge(int from, int to);
 
+        /// <summary>
+        /// Modifies specified edge's weight. Throws exception
+        /// if there's no such edge.
+        /// </summary>
+        /// <param name="from"></param>
+        /// <param name="to"></param>
+        /// <param name="weight"></param>
         void UpdateEdgeWeight(int from, int to, int weight);
     }
 }

@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Program.GraphLibrary
 {
+    /// <summary>
+    /// Class representing graph, holding information about edges in matrix.
+    /// </summary>
     class MatrixGraph : IGraph
     {
         public uint VerticesCount { get; private set; }
