@@ -131,8 +131,8 @@ namespace Program.GraphGUI
             {
                 vertices[i].x += Math.Sign(vertices[i].dx) * Math.Min(Math.Abs(vertices[i].dx), temperature);
                 vertices[i].y += Math.Sign(vertices[i].dy) * Math.Min(Math.Abs(vertices[i].dy), temperature);
-                vertices[i].x = Math.Min((double)width - 1, Math.Max(0, vertices[i].x));
-                vertices[i].y = Math.Min((double)height - 1, Math.Max(0, vertices[i].y));
+                vertices[i].x = Math.Min((double)width - 11, Math.Max(10, vertices[i].x));
+                vertices[i].y = Math.Min((double)height - 11, Math.Max(10, vertices[i].y));
             }
         }
     }
