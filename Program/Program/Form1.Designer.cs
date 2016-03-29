@@ -48,8 +48,9 @@
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
             this.deleteEdgeButton = new System.Windows.Forms.Button();
             this.listOfEgdes = new System.Windows.Forms.ListBox();
-            this.resultLabel = new System.Windows.Forms.Label();
             this.graphImage = new System.Windows.Forms.PictureBox();
+            this.resultLabel = new System.Windows.Forms.Label();
+            this.showGraphButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -70,7 +71,8 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 294F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 232F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 301F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 11F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 308F));
+            this.tableLayoutPanel1.Controls.Add(this.showGraphButton, 1, 0);
             this.tableLayoutPanel1.Controls.Add(this.uploadGraphButton, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.computeButton, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel2, 0, 1);
@@ -364,6 +366,17 @@
             this.listOfEgdes.Size = new System.Drawing.Size(220, 236);
             this.listOfEgdes.TabIndex = 1;
             // 
+            // graphImage
+            // 
+            this.graphImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.graphImage.Location = new System.Drawing.Point(830, 69);
+            this.graphImage.Name = "graphImage";
+            this.graphImage.Size = new System.Drawing.Size(302, 287);
+            this.graphImage.TabIndex = 7;
+            this.graphImage.TabStop = false;
+            // 
             // resultLabel
             // 
             this.resultLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -380,16 +393,20 @@
             this.resultLabel.Text = "?";
             this.resultLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
-            // graphImage
+            // showGraphButton
             // 
-            this.graphImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.graphImage.Location = new System.Drawing.Point(830, 69);
-            this.graphImage.Name = "graphImage";
-            this.graphImage.Size = new System.Drawing.Size(302, 287);
-            this.graphImage.TabIndex = 7;
-            this.graphImage.TabStop = false;
+            this.showGraphButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.showGraphButton.FlatAppearance.BorderSize = 3;
+            this.showGraphButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.showGraphButton.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.showGraphButton.Location = new System.Drawing.Point(299, 5);
+            this.showGraphButton.Margin = new System.Windows.Forms.Padding(5);
+            this.showGraphButton.Name = "showGraphButton";
+            this.showGraphButton.Size = new System.Drawing.Size(222, 56);
+            this.showGraphButton.TabIndex = 8;
+            this.showGraphButton.Text = "SHOW GRAPH";
+            this.showGraphButton.UseVisualStyleBackColor = false;
+            this.showGraphButton.Click += new System.EventHandler(this.showGraphButton_Click);
             // 
             // Form1
             // 
@@ -442,6 +459,7 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel6;
         private System.Windows.Forms.Button deleteEdgeButton;
         private System.Windows.Forms.PictureBox graphImage;
+        private System.Windows.Forms.Button showGraphButton;
     }
 }
 

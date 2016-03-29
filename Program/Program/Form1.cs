@@ -71,9 +71,7 @@ namespace Program
                 return;
             }
 
-            resultLabel.Text = Algorithms.ChceckConnectivity(graph).ToString();
-            Visualizer v = new Visualizer();
-            v.DrawGraph(graphImage, graph);
+            resultLabel.Text = Algorithms.ChceckConnectivity(graph).ToString();           
         }
 
         private void deleteEdgeButton_Click(object sender, EventArgs e)
@@ -120,6 +118,19 @@ namespace Program
                 graph = new MatrixGraph((uint)numberOfVertices.Value);
             listOfEgdes.Items.Clear();
             resultLabel.Text = "?";
+            graphImage.Image = null;
+        }
+
+        private void showGraphButton_Click(object sender, EventArgs e)
+        {
+            if (graph == null)
+            {
+                MessageBox.Show("There is no graph!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            Visualizer v = new Visualizer();
+            v.DrawGraph(graphImage, graph);
         }
     }
 }
