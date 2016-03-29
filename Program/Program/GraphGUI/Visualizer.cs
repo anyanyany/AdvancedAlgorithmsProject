@@ -14,7 +14,7 @@ namespace Program.GraphGUI
     /// </summary>
     public class Visualizer
     {
-        private const int ITERATIONS = 0; // TODO: Change
+        private const int ITERATIONS = 100; // TODO: Change
         private double kValue, temperature;
         private List<Edge> graphEdges;
 
@@ -33,7 +33,7 @@ namespace Program.GraphGUI
                 g.Clear(Color.White);
                 Position[] vertices = FruchtermanReingold(graph, bitmap);
                 foreach (Position p in vertices)
-                    g.DrawEllipse(Pens.Red, (float)(p.x - 1.5), (float)(p.y - 1.5), 3, 3);
+                    g.FillEllipse(Brushes.Red, (float)(p.x - 2.5), (float)(p.y - 2.5), 5, 5);
                 foreach (Edge e in graphEdges)
                     g.DrawLine(Pens.Black, new Point((int)vertices[e.From].x, (int)vertices[e.From].y), 
                         new Point((int)vertices[e.To].x, (int)vertices[e.To].y));
@@ -47,7 +47,7 @@ namespace Program.GraphGUI
             int height = image.Height, width = image.Width;
             int area = height * width;
             kValue = Math.Sqrt(area / graph.VerticesCount);
-            temperature = width / 10;
+            temperature = (double)width / 10.0;
             Position[] vertices = initializePositions(width, height, graph);
             graphEdges = graph.GetEdges();
 
@@ -56,6 +56,7 @@ namespace Program.GraphGUI
                 calculateVertexDisplacement(ref vertices);
                 calculateEdgeDisplacement(ref vertices);
                 moveVertices(ref vertices, width, height);
+                temperature -= (((double)width/10.0) / ITERATIONS);
             }
 
             return vertices;
@@ -88,6 +89,7 @@ namespace Program.GraphGUI
 
         private void calculateVertexDisplacement(ref Position[] vertices)
         {
+            Random r = new Random();
             for (int i = 0; i < vertices.Length; i++)
             {
                 vertices[i].dx = vertices[i].dy = 0;
@@ -96,24 +98,30 @@ namespace Program.GraphGUI
                     {
                         double ddx = vertices[i].x - vertices[j].x;
                         double ddy = vertices[i].y - vertices[j].y;
-                        vertices[i].dx = vertices[i].dx + (ddx / Math.Abs(ddx)) * fr(Math.Abs(ddx));
-                        vertices[i].dy = vertices[i].dy + (ddy / Math.Abs(ddy)) * fr(Math.Abs(ddy));
+                        if (Math.Abs(ddx) > 100.0 || Math.Abs(ddy) > 100.0) continue;
+                        if (ddx == 0) ddx = (r.Next() % 2 == 0 ? 1 : -1) * 1e-6;
+                        if (ddy == 0) ddy = (r.Next() % 2 == 0 ? 1 : -1) * 1e-6;
+                        vertices[i].dx += Math.Sign(ddx) * fr(Math.Abs(ddx));
+                        vertices[i].dy += Math.Sign(ddy) * fr(Math.Abs(ddy));
                     }
             }
         }
 
         private void calculateEdgeDisplacement(ref Position[] vertices)
         {
+            Random r = new Random();
             foreach (Edge e in graphEdges)
             {
                 int i = e.From, j = e.To;
 
                 double ddx = vertices[i].x - vertices[j].x;
                 double ddy = vertices[i].y - vertices[j].y;
-                vertices[i].dx = vertices[i].dx - (ddx / Math.Abs(ddx)) * fr(Math.Abs(ddx));
-                vertices[i].dy = vertices[i].dy - (ddy / Math.Abs(ddy)) * fr(Math.Abs(ddy));
-                vertices[j].dx = vertices[j].dx + (ddx / Math.Abs(ddx)) * fr(Math.Abs(ddx));
-                vertices[j].dy = vertices[j].dy + (ddy / Math.Abs(ddy)) * fr(Math.Abs(ddy));
+                if (ddx == 0) ddx = (r.Next() % 2 == 0 ? 1 : -1) * 1e-6;
+                if (ddy == 0) ddy = (r.Next() % 2 == 0 ? 1 : -1) * 1e-6;
+                vertices[i].dx -= Math.Sign(ddx) * fa(Math.Abs(ddx));
+                vertices[i].dy -= Math.Sign(ddy) * fa(Math.Abs(ddy));
+                vertices[j].dx += Math.Sign(ddx) * fa(Math.Abs(ddx));
+                vertices[j].dy += Math.Sign(ddy) * fa(Math.Abs(ddy));
             }
         }
 
@@ -121,10 +129,10 @@ namespace Program.GraphGUI
         {
             for (int i = 0; i < vertices.Length; i++)
             {
-                vertices[i].x = vertices[i].x + (vertices[i].dx / Math.Abs(vertices[i].dx)) * Math.Min(vertices[i].dx, temperature);
-                vertices[i].y = vertices[i].y + (vertices[i].dy / Math.Abs(vertices[i].dy)) * Math.Min(vertices[i].dy, temperature);
-                vertices[i].x = Math.Min((double)width / 2, Math.Max((double)-width / 2, vertices[i].x));
-                vertices[i].y = Math.Min((double)height / 2, Math.Max((double)-height / 2, vertices[i].y));
+                vertices[i].x += Math.Sign(vertices[i].dx) * Math.Min(Math.Abs(vertices[i].dx), temperature);
+                vertices[i].y += Math.Sign(vertices[i].dy) * Math.Min(Math.Abs(vertices[i].dy), temperature);
+                vertices[i].x = Math.Min((double)width - 1, Math.Max(0, vertices[i].x));
+                vertices[i].y = Math.Min((double)height - 1, Math.Max(0, vertices[i].y));
             }
         }
     }
