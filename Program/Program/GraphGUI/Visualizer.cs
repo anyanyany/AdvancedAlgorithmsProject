@@ -14,7 +14,7 @@ namespace Program.GraphGUI
     /// </summary>
     public class Visualizer
     {
-        private const int ITERATIONS = 100; // TODO: Change
+        private const int ITERATIONS = 1000; // TODO: Change
         private double kValue, temperature;
         private List<Edge> graphEdges;
 
