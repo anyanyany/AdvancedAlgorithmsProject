@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+            this.showGraphButton = new System.Windows.Forms.Button();
             this.uploadGraphButton = new System.Windows.Forms.Button();
             this.computeButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
@@ -50,7 +51,6 @@
             this.listOfEgdes = new System.Windows.Forms.ListBox();
             this.graphImage = new System.Windows.Forms.PictureBox();
             this.resultLabel = new System.Windows.Forms.Label();
-            this.showGraphButton = new System.Windows.Forms.Button();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.tableLayoutPanel3.SuspendLayout();
@@ -82,13 +82,28 @@
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 3;
+            this.tableLayoutPanel1.RowCount = 2;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 18.36735F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 81.63265F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 15F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(1135, 380);
             this.tableLayoutPanel1.TabIndex = 0;
+            // 
+            // showGraphButton
+            // 
+            this.showGraphButton.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.showGraphButton.FlatAppearance.BorderSize = 3;
+            this.showGraphButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.showGraphButton.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.showGraphButton.Location = new System.Drawing.Point(299, 5);
+            this.showGraphButton.Margin = new System.Windows.Forms.Padding(5);
+            this.showGraphButton.Name = "showGraphButton";
+            this.showGraphButton.Size = new System.Drawing.Size(222, 59);
+            this.showGraphButton.TabIndex = 8;
+            this.showGraphButton.Text = "SHOW GRAPH";
+            this.showGraphButton.UseVisualStyleBackColor = false;
+            this.showGraphButton.Click += new System.EventHandler(this.showGraphButton_Click);
             // 
             // uploadGraphButton
             // 
@@ -99,7 +114,7 @@
             this.uploadGraphButton.Location = new System.Drawing.Point(5, 5);
             this.uploadGraphButton.Margin = new System.Windows.Forms.Padding(5);
             this.uploadGraphButton.Name = "uploadGraphButton";
-            this.uploadGraphButton.Size = new System.Drawing.Size(284, 56);
+            this.uploadGraphButton.Size = new System.Drawing.Size(284, 59);
             this.uploadGraphButton.TabIndex = 0;
             this.uploadGraphButton.Text = "LOAD GRAPH";
             this.uploadGraphButton.UseVisualStyleBackColor = false;
@@ -114,7 +129,7 @@
             this.computeButton.Font = new System.Drawing.Font("Century Gothic", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.computeButton.Location = new System.Drawing.Point(529, 3);
             this.computeButton.Name = "computeButton";
-            this.computeButton.Size = new System.Drawing.Size(295, 60);
+            this.computeButton.Size = new System.Drawing.Size(295, 63);
             this.computeButton.TabIndex = 2;
             this.computeButton.Text = "FIND EDGE CONNECTIVITY";
             this.computeButton.UseVisualStyleBackColor = false;
@@ -128,13 +143,13 @@
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.Controls.Add(this.tableLayoutPanel3, 0, 0);
             this.tableLayoutPanel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(6, 69);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(6, 72);
             this.tableLayoutPanel2.Margin = new System.Windows.Forms.Padding(6, 3, 5, 3);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(283, 287);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(283, 305);
             this.tableLayoutPanel2.TabIndex = 5;
             // 
             // tableLayoutPanel3
@@ -158,7 +173,7 @@
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 38F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 8F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(277, 281);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(277, 299);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
             // label3
@@ -316,7 +331,7 @@
             this.addEdgeButton.Location = new System.Drawing.Point(8, 238);
             this.addEdgeButton.Margin = new System.Windows.Forms.Padding(8, 3, 8, 5);
             this.addEdgeButton.Name = "addEdgeButton";
-            this.addEdgeButton.Size = new System.Drawing.Size(261, 38);
+            this.addEdgeButton.Size = new System.Drawing.Size(261, 56);
             this.addEdgeButton.TabIndex = 4;
             this.addEdgeButton.Text = "ADD EDGE";
             this.addEdgeButton.UseVisualStyleBackColor = true;
@@ -330,12 +345,12 @@
             this.tableLayoutPanel6.Controls.Add(this.deleteEdgeButton, 0, 1);
             this.tableLayoutPanel6.Controls.Add(this.listOfEgdes, 0, 0);
             this.tableLayoutPanel6.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel6.Location = new System.Drawing.Point(297, 69);
+            this.tableLayoutPanel6.Location = new System.Drawing.Point(297, 72);
             this.tableLayoutPanel6.Name = "tableLayoutPanel6";
             this.tableLayoutPanel6.RowCount = 2;
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 242F));
             this.tableLayoutPanel6.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 29F));
-            this.tableLayoutPanel6.Size = new System.Drawing.Size(226, 287);
+            this.tableLayoutPanel6.Size = new System.Drawing.Size(226, 305);
             this.tableLayoutPanel6.TabIndex = 6;
             // 
             // deleteEdgeButton
@@ -348,7 +363,7 @@
             this.deleteEdgeButton.Location = new System.Drawing.Point(3, 242);
             this.deleteEdgeButton.Margin = new System.Windows.Forms.Padding(3, 0, 3, 6);
             this.deleteEdgeButton.Name = "deleteEdgeButton";
-            this.deleteEdgeButton.Size = new System.Drawing.Size(220, 39);
+            this.deleteEdgeButton.Size = new System.Drawing.Size(220, 57);
             this.deleteEdgeButton.TabIndex = 5;
             this.deleteEdgeButton.Text = "DELETE EDGE";
             this.deleteEdgeButton.UseVisualStyleBackColor = false;
@@ -371,9 +386,9 @@
             this.graphImage.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.graphImage.Location = new System.Drawing.Point(830, 69);
+            this.graphImage.Location = new System.Drawing.Point(830, 72);
             this.graphImage.Name = "graphImage";
-            this.graphImage.Size = new System.Drawing.Size(302, 287);
+            this.graphImage.Size = new System.Drawing.Size(302, 305);
             this.graphImage.TabIndex = 7;
             this.graphImage.TabStop = false;
             // 
@@ -386,27 +401,12 @@
             this.resultLabel.BackColor = System.Drawing.Color.Transparent;
             this.resultLabel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.resultLabel.Font = new System.Drawing.Font("Century Gothic", 100F);
-            this.resultLabel.Location = new System.Drawing.Point(529, 66);
+            this.resultLabel.Location = new System.Drawing.Point(529, 69);
             this.resultLabel.Name = "resultLabel";
-            this.resultLabel.Size = new System.Drawing.Size(295, 293);
+            this.resultLabel.Size = new System.Drawing.Size(295, 311);
             this.resultLabel.TabIndex = 3;
             this.resultLabel.Text = "?";
             this.resultLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            // 
-            // showGraphButton
-            // 
-            this.showGraphButton.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.showGraphButton.FlatAppearance.BorderSize = 3;
-            this.showGraphButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.showGraphButton.Font = new System.Drawing.Font("Century Gothic", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.showGraphButton.Location = new System.Drawing.Point(299, 5);
-            this.showGraphButton.Margin = new System.Windows.Forms.Padding(5);
-            this.showGraphButton.Name = "showGraphButton";
-            this.showGraphButton.Size = new System.Drawing.Size(222, 56);
-            this.showGraphButton.TabIndex = 8;
-            this.showGraphButton.Text = "SHOW GRAPH";
-            this.showGraphButton.UseVisualStyleBackColor = false;
-            this.showGraphButton.Click += new System.EventHandler(this.showGraphButton_Click);
             // 
             // Form1
             // 
